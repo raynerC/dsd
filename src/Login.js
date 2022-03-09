@@ -12,7 +12,7 @@ function Login() {
 
     return (
     <div className='login'>
-        <h2>I am the login page</h2>
+        <h2>Login page</h2>
 
         <div className="login_logo">
              
