@@ -18,17 +18,11 @@ function ChatHeader({ channelName }) {
         </div>
        
         <div className='chatHeader_right'>
-            <NotificationsIcon/>
-            <LocationOnIcon/>
-            <GroupIcon/>
 
             <div className='chatHeader_search'>
                 <input placeholder='search'/>
                 <SearchIcon/>
             </div>
-
-            <SendIcon/>
-            <HelpIcon/>
         </div>
     </div>
   )

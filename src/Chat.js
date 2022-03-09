@@ -21,7 +21,7 @@ function Chat() {
       db.collection('channels')
       .doc(channelId)
       .collection("messages")
-      .orderBy("timestamp", Query.Direction.DESCENDING)
+      .orderBy("timestamp")
       .onSnapshot((snapshot) => 
         setMessages(snapshot.docs.map((doc) => doc.data()))
       );

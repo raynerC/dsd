@@ -38,12 +38,6 @@ function Sidebar() {
     }
   };
 
-  const handleDeleteChannel = (id) => {
-    if (id) {
-      db.collection("channels").doc(id).delete();
-    }
-  };
-
   return (
     <div className='sidebar'>
       <div className='sidebar_top'>
@@ -61,14 +55,11 @@ function Sidebar() {
         </div>
         <div className="sidebar_channelsList">
             {channels.map(({id, channel}) => (
-              <>
               <SidebarChannel
                 key={id}
                 id={id}
                 channelName={channel.channelName}
               />
-              <AddToPhotosIcon onClick={() => handleDeleteChannel(id)} className='sidebar_addChannel'/>
-              </>
             ))}
        </div>
       </div>

@@ -1,0 +1,82 @@
+.gamebar {
+    display: flex;
+    flex-direction: column;
+    flex: 0.30;
+    height: 100vh;
+    background-color: #FFFFFF;
+}
+
+.gamebar_top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 19px;
+    background-color: #FFFFFF;
+    color: #060607;
+    border-bottom: 2px solid #CCCCCC;
+}
+
+.gamebar_channels {
+    flex: 1;
+ }
+
+ .gamebar_addChannel {
+     cursor: pointer;
+ }
+
+ .gamebar_addChannel:hover {
+    background: #D4D7DD;
+ }
+
+ .gamebar_channelsHeader {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     padding: 10px;
+     background-color: #F2F3F5;
+     color: #6a7480;
+ }
+
+ .gamebar_header {
+     display: flex;
+     align-items: center;
+ }
+
+ .gamebar_voice , .gamebar_profile{
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     color: gray;
+     background-color: #ebedef;
+     padding: 10px;
+     border-top: 3px solid #CCCCCC;
+ }
+ 
+ .gamebar_voiceInfo{
+     flex:1;
+     padding: 10px;
+     color: #3BA55D;
+ }
+
+ .gamebar_voiceicon{
+    color: #3BA55D;
+    font-size: large;
+ }
+
+.gamebar_callIcons > .MuiSvgIcon-root {
+    padding: 10px;
+}   
+
+
+.gamebar_profileInfo {
+    flex: 1;
+    padding: 10px;
+}
+
+.gamebar_profileInfo > h3 {
+    color: 6a7480;
+}
+
+.gamebar_profileIcons > .MuiSvgIcon-root {
+    padding: 10px;
+}
