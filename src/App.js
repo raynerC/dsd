@@ -9,6 +9,11 @@ import { selectUser } from "./features/userSlice";
 import { useEffect } from 'react';
 import { auth } from './firebase';
 import { login, logout } from './features/userSlice'; 
+import Home from './webpages/Home';
+import Search from './webpages/Search';
+import { BrowserRouter as Router, Routes, Route}
+    from 'react-router-dom';
+
 
 function App() {
   const dispatch = useDispatch();
@@ -32,13 +37,14 @@ function App() {
   },[dispatch])
 
   return (
-    <div className="app">
+    <div>
       {user ? (
-        <>
-        <Sidebar/>
-        <Chat/>
-        <Gamebar/>
-        </>
+        <Router>
+        <Routes>
+            <Route exact path='/' element={<Home/>} />
+            <Route path='/Search' element={<Search/>} />
+        </Routes>
+        </Router>
       ):(
         <Login/>
       )}

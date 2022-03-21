@@ -7,6 +7,7 @@ import { selectUser } from './features/userSlice';
 import { useSelector } from "react-redux";
 import db, { firestore } from './firebase';
 import { collection, query, where, getDocs, doc } from "firebase/firestore";
+import { recommendGames } from "./functions/recommendGames";
 
 function Gamebar() {
   const user = useSelector(selectUser);
@@ -25,56 +26,40 @@ function Gamebar() {
     ))
   }, [])
 
+  
   const handleAddChannel = () => {
     const channelName = prompt("What games do you play");
-
-    var recombee = require('recombee-js-api-client');
-    var client = new recombee.ApiClient('gaming-social-platform-dev', '5ibqr03apGw93S3cZR7pWkEdernCIQbX1troI03Z2UCwcfm7vZSTdzxG7xyEQwee');
     
     console.log(`current user UID: ${user.uid}`)
     console.log(`current user displayName: ${user.displayName}`)
-      
-    let gamesId = [];
-    let gamesName = [];
 
-    fetchItemIdByGameName(channelName)
-    .then((gameId) => 
-      client.send(new recombee.AddBookmark(user.uid, gameId))
-    )
-    .then(() => client.send(new recombee.RecommendItemsToUser(user.uid, 5)))
-    .then((response) => {
-      gamesId = response.recomms.map((game) => parseInt(game.id));
-      return fetchGameInfo(gamesId);
-    })
-    .then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        gamesName.push(doc.data().name)
-      })
+  //   let gamesId = [];
+  //   let gamesName = [];
+  //   let formattedDatas = [];
+  //   let vectorData = [];
+  //   let similarityTable = [];
+  //   let listItems = [];
+    
+  //   // Get recommendation
+  //   // function to get index
+  //   function contains(formattedData, obj) {
+  //     var i = a.length;
+  //     while (i--) {
+  //        if (a[i] === obj) {
+  //            return true;
+  //        }
+  //     }
+  //     return false;
+  // }
+  //   // function to find games in the array //
 
-      //update the game recommended list
-      setRecGameList(gamesName)
-    })
-    .catch(console.log);
+  //   listItems = (getSimilarDocuments(2, similarityTable))
+
+
+
+    //update the game recommended list
+    setRecGameList(recommendGames(channelName));
   };
-
-  async function fetchItemIdByGameName(gameName){
-    const q = query(collection(firestore, "games"), where("name","==", gameName));
-    const querySnapshot = await getDocs(q);
-
-    let gameId = null;
-    querySnapshot.forEach((doc) => {
-      gameId = gameId || doc.id
-    })
-
-    return !gameId || (gameId).toString();
-  }
-
-  async function fetchGameInfo(gamesId){
-    const q = query(collection(firestore, "games"), where("itemId","in", gamesId));
-    const querySnapshot = await getDocs(q);  
-    return querySnapshot;
-  }
-
 
   return (
     <div className='gamebar'>
@@ -92,7 +77,8 @@ function Gamebar() {
           <AddToPhotosIcon onClick={handleAddChannel} className='gamebar_addChannel' />
         </div>
         <div className="gamebar_channelsList">
-          {recGameList.map((gameName, i) => <GameSideBar key={i} rank={i+1} gameName={gameName}/>)}
+          {recGameList.map((game, i) => <GameSideBar key={i} rank={i+1} gameName={game.id}/>)}
+
         </div>
       </div>
 
@@ -100,6 +86,8 @@ function Gamebar() {
 
     </div>
   );
+
+
 }
 
 function GameSideBar({rank, gameName}){
@@ -112,3 +100,5 @@ function GameSideBar({rank, gameName}){
 
 
 export default Gamebar
+
+
