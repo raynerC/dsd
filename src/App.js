@@ -11,7 +11,7 @@ import { auth } from './firebase';
 import { login, logout } from './features/userSlice'; 
 import Home from './webpages/Home';
 import Search from './webpages/Search';
-import { BrowserRouter as Router, Routes, Route}
+import { BrowserRouter, Routes, Route}
     from 'react-router-dom';
 
 
@@ -39,12 +39,12 @@ function App() {
   return (
     <div>
       {user ? (
-        <Router>
-        <Routes>
+        <BrowserRouter>
+          <Routes>
             <Route exact path='/' element={<Home/>} />
             <Route path='/Search' element={<Search/>} />
-        </Routes>
-        </Router>
+          </Routes>
+        </BrowserRouter>
       ):(
         <Login/>
       )}

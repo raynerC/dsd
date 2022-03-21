@@ -5,11 +5,13 @@ import AddToPhotosIcon from '@material-ui/icons/AddToPhotos';
 import SignalCellular4BarSharpIcon from '@material-ui/icons/SignalCellular4BarSharp';
 import PhoneOutlinedIcon from '@material-ui/icons/PhoneOutlined';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import './SidebarChannel.css';
 import MicIcon from '@material-ui/icons/Mic';
 import HeadsetIcon from '@material-ui/icons/Headset';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { Avatar } from '@material-ui/core';
 import SidebarChannel from './SidebarChannel';
+import SearchIcon from '@material-ui/icons/Search';
 import { selectUser } from './features/userSlice';
 import {useSelector} from "react-redux";
 import db, {auth} from './firebase';
@@ -18,6 +20,8 @@ import db, {auth} from './firebase';
 function Sidebar() {
   const user = useSelector(selectUser);
   const [channels, setChannels] = useState([]);
+
+  const [searchInput, setSearchInput] = useState("");
 
   useEffect(() => {
     db.collection('channels').onSnapshot(snapshot => (
@@ -53,14 +57,25 @@ function Sidebar() {
           </div>
           <AddToPhotosIcon onClick={handleAddChannel} className='sidebar_addChannel'/>
         </div>
+        <div className="channel_search">
+          <input placeholder='Search group chat'
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.currentTarget.value)}
+            />
+        </div>
         <div className="sidebar_channelsList">
-            {channels.map(({id, channel}) => (
+            {
+            channels
+            .filter(({id, channel})=>{
+              return channel.channelName.toLowerCase().search(searchInput.toLowerCase()) !== -1;
+            })
+            .map(({id, channel}) => (
               <SidebarChannel
-                key={id}
-                id={id}
-                channelName={channel.channelName}
-              />
-            ))}
+                  key={id}
+                  id={id}
+                  channelName={channel.channelName}
+                />
+              ))}
        </div>
       </div>
 
